@@ -1,4 +1,6 @@
-# proyectoinfo
+# Proyecto Informática
+  ### &nbsp;&nbsp;&nbsp; `Raúl Cano, Iker Doblas`
+  ### &nbsp;&nbsp;&nbsp; `GrEVA - ESEIAAT - UPC`
 
 # Tema: Població activa en ciutats i països d'Europa per sexes
 El tema escollit ens permetrà organitzar una informació que pot ser de gran utilitat per conèixer com està repartida la població a Europa i el patrons de gènere en la seva evolució. La cerca d’aquesta informació es farà variada i intuïtiva gràcies al programa que donarà accés a filtrar les cerques segons el que vulgui l’usuari.ma
