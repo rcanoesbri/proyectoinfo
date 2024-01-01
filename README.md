@@ -5,29 +5,47 @@ El tema escollit ens permetrà organitzar una informació que pot ser de gran ut
 
 # Dades: (.xlsx)
 Les dades han estat extretes de la base de dades DataEuropa
-Població Activa Total
-Població Activa Homes
-Població Activa Dones
+
+- [Població Activa Total](https://docs.google.com/spreadsheets/d/1ZB8_-k0fX_-CrioSKYTamxH_YginviXG/edit#gid=1213063332)
+
+- [Població Activa Homes](https://docs.google.com/spreadsheets/d/1BA49W5PgTZ-HYTZ75VWgO2pJtmDEJATZ/edit#gid=1911124909)
+
+- [Població Activa Dones](https://docs.google.com/spreadsheets/d/1jwPTAQJ1xkP8atdHIibBxzgmWL7w45_I/edit#gid=1368044712)
 
 # Entitats:
 
 
 # Vectors i tuples:
-Vector ciutats:
-Tupla ciutat:
-Vector anys
-Població activa total per anys
-Població activa homes per anys
-Població activa dones per anys
-Vector de tuples ciutat.
+
+- Vector ciutats:
+
+- Tupla ciutat:
+
+  - Vector anys
+
+  - Població activa total per anys
+
+  - Població activa homes per anys
+
+  - Població activa dones per anys
+
+- Vector de tuples ciutat.
 
 # Funciones Proyecto:
-Estudi Població activa d’una ciutat en un any concret.
-Població activa total, població activa homes, població activa dones, % homes, % dones.
-Evolució població activa d’una ciutat:
-Creixement o decreixement de la població activa total, d’homes i de dones.
-% de creixement o decreixement.
-Comparació Població Activa d’una ciutat entre dos anys demanats.
-Creixement o decreixement de la població activa total, d’homes i de dones.
-% de creixement o decreixement.
-Comparació Població Activa de dues ciutats
+1. Estudi Població activa d’una ciutat en un any concret.
+
+    - Població activa total, població activa homes, població activa dones, % homes, % dones.
+
+2. Evolució població activa d’una ciutat:
+
+    - Creixement o decreixement de la població activa total, d’homes i de dones.
+
+    - % de creixement o decreixement.
+
+3. Comparació Població Activa d’una ciutat entre dos anys demanats.
+
+    - Creixement o decreixement de la població activa total, d’homes i de dones.
+
+    - % de creixement o decreixement.
+
+4. Comparació Població Activa de dues ciutats
