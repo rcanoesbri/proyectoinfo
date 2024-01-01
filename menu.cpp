@@ -7,7 +7,7 @@ void alta (bool& t);
 void baixa (bool& t);
 
 
-struct poblacio{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACIÓ
+struct poblacio{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACIï¿½
    int years;
    double Ptotal;
    double Phomes;
@@ -31,7 +31,7 @@ cout<<""<<endl;
 cout<<"Hola "<<name<<"."<<endl;
 cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
 
-   //MENÚ BÀSIC
+   //MENï¿½ Bï¿½SIC
 while (!t){
  cout<<"1. Alta d'usuari"<<endl;
  cout<<"2. Baixa d'usuari"<<endl;
@@ -55,7 +55,7 @@ while (!t){
 
 
 
-//ACCIÓ ALTA
+//ACCIï¿½ ALTA
 void alta (bool& t){
   //Variables propies de l'accio
   int numalta;
@@ -89,7 +89,7 @@ t=false;
 
 
 
-//ACCIÓ ALTA
+//ACCIï¿½ ALTA
 void baixa (bool& t){
   //Variables propies de l'accio
   int numbaixa;
