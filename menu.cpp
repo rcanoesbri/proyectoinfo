@@ -1,119 +1,145 @@
 #include <iostream>
 #include <fstream>
+#include <windows.h>
 #include <vector>
 using namespace std;
 
-void alta (bool& t);
-void baixa (bool& t);
+typedef basic_iostream<wchar_t> wiostream;
+typedef basic_fstream<wchar_t> wfstream;
 
-
-struct poblacio{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACI�
-   int years;
-   double Ptotal;
-   double Phomes;
-   double Pdones;
+struct ciutat{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACI�
+   string nom;
+   vector<double> Ptotal;
+   vector<double> Phomes;
+   vector<double> Pdones;
 };
 
+struct usuari{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACI�
+   string nom;
+   string contrasenya;
+   vector<string> ciutatspreferides;
+};
+
+void llegirusuaris (int& nusuaris, vector<usuari>& usuaris);
+void llegirdades (vector<ciutat>& ciutats);
+void nouusuari ();
+void esborrarusuari ();
+void inicisesio(string& nomusuari, usuari& usuariactual);
 
 int main (){
-   //DECLAREM LES VARIABLES
-string name;
-int basic;
-bool sortir, t=false;
+   //Declarar Variables
+   char seleccio;
+   string name, nomusuari;
+   int nusuaris;
+   vector<usuari> usuaris;
+   vector<ciutat> ciutats;
 
-   //MISSATGES INICIALS PER PANTALLA
-cout<<"Et donem la benvinguda a la base de dades ___, on podras trobar informacio sobre la poblacio activa de diverses ciutats europees."<<endl;
-cout<<"Si us plau, ingresa el teu nom: ";
+   usuari usuariactual;
+
+   //Cridem accions inicialitzacio
+   llegirdades(ciutats); //generara el vector amb totes les dades de les ciutats
+   int tamany = ciutats.size();
+   cout<<"numero ciutats: "<<tamany;
+   //llegirusuaris(nusuaris, usuaris); //generara el vector amb tots els usuaris
 
    //RECONEIXEMENT DE L'USUARI
-cin>>name;
-cout<<""<<endl;
-cout<<"Hola "<<name<<"."<<endl;
-cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
+   cout<<"Et donem la benvinguda a la base de dades ___, on podras trobar informacio sobre la poblacio activa de diverses ciutats europees."<<endl;
+   cout<<"Si us plau, ingresa el teu nom: ";
+   cin>>name;
+   cout<<""<<endl;
+   cout<<"Hola "<<name<<"."<<endl;
 
-   //MEN� B�SIC
-while (!t){
- cout<<"1. Alta d'usuari"<<endl;
- cout<<"2. Baixa d'usuari"<<endl;
- cout<<"3. Sortir"<<endl;
+   //Menu Inicial
+   cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
+   cout<<"1. Iniciar Sesio"<<endl;
+   cout<<"2. Registrar Nou Usuari"<<endl;
+   cout<<"3. Esborrar Usuari"<<endl;
+   cout<<"4. Sortir"<<endl;
 
- cout<<"Que vols fer?: ";
- cin>>basic;
- cout<<endl;
+   cout<<"Que vols fer?: ";
+   cin>>seleccio;
+   cout<<endl;
 
- switch (basic){
-   case 1: t=true; alta(t);
-      break;
-   case 2: t=true; baixa(t);
-      break;
-   case 3: t=true; cout<<"Gracies per utilitzar ___."; sortir=true;
-      break;
-   default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
+   switch (seleccio){
+      case 1: inicisesio(string& nomusuari, usuari& usuariactual);
+         break;
+      case 2: nouusuari();
+         break;
+      case 3: esborrarusuari();
+         break;
+      case 4: cout<<"Gracies per utilitzar ___.";
+         break;
+      default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
    }//End switch
- }//End While
 }//End main
 
-
-
-//ACCI� ALTA
-void alta (bool& t){
-  //Variables propies de l'accio
-  int numalta;
-
-  //Dialegs inicials de l'accio
-  cout<<"MENU D'ALTA"<<endl;
-  cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
-
-  //Menu Alta
-  t=false;
-  while (!t){
-   cout<<"1. Iniciar sessio"<<endl;
-   cout<<"2. Registrar nou usuari"<<endl;
-   cout<<"3. Sortir"<<endl;
-
-  cout<<"Que vols fer?: ";
-  cin>>numalta;
-
- switch (numalta){
-   case 1: t=true;
-      break;
-   case 2: t=true;
-      break;
-   case 3: t=true; cout<<endl<<"MENU D'INICI"<<endl;
-      break;
-   default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
-   }//End switch
- }//End While
-t=false;
+/*void llegirusuaris (int& nusuaris, vector<usuari>& usuaris){
+   wifstream UsuarisIN("usuaris.txt");
+   UsuarisIN>>nusuaris;
+   for(int i=0; i<nusuaris; i++){
+      usuari x;
+      string ciutat;
+      UsuarisIN>>x.dni>>x.nom>>ciutat;
+      while (ciutat != "FIN")
+      {
+         x.ciutatspreferides.push_back(ciutat);
+         UsuarisIN>>ciutat;
+      }
+      usuaris.push_back(x);
+   }
+}
+*/
+void llegirdades (vector<ciutat>& ciutats){
+   ifstream Ptotal("poblacioactiva_total.csv");
+   ifstream Phomes("poblacioactiva_homes.csv");
+   ifstream Pdones("poblacioactiva_dones.csv");
+   string g, nomciutat;
+   int any1, any2, any3, any4, any5, any6, any7, any8, any9, any10, pactivatotal, pactivahomes, pactivadones;
+   Ptotal>>g>>any1>>any2>>any3>>any4>>any5>>any6>>any7>>any8>>any9>>any10;
+   cout<<g<<any1<<any2<<any3<<any4<<any5<<any6<<any7<<any8<<any9<<any10;
+   while(Ptotal>>nomciutat){
+      ciutat x;
+      x.nom = nomciutat;
+      Phomes>>nomciutat;
+      Pdones>>nomciutat;
+      for(int i=0; i<10; i++){
+         Ptotal>>pactivatotal;
+         x.Ptotal.push_back(pactivatotal);
+         Phomes>>pactivahomes;
+         x.Phomes.push_back(pactivahomes);
+         Pdones>>pactivadones;
+         x.Pdones.push_back(pactivadones);
+      }
+      ciutats.push_back(x);
+   }
 }
 
+void nouusuari (){
+   string username, password;
+   cout<<"Introdueix el teu nom d'usuari, sense fer servir espais."<<endl<<"Nom d'usuari: ";
+   cin>>username;
+   cout<<endl<<"Escull una contrasenya amb lletres i numeros (evitar caracters especials)."<<endl<<"Contrasenya: ";
+   cin>>password;
+   usuari x;
+   x.nom = username;
+   x.contrasenya = password;
+   usuaris.push_back(x);
+}
 
+void esborrarusuari (){
+   string username, password;
+   cout<<"Nom d'usuari: ";
+   cin>>username;
+   cout<<endl<<"Contrasenya: ";
+   cin>>password;
+   
+}
 
-//ACCI� ALTA
-void baixa (bool& t){
-  //Variables propies de l'accio
-  int numbaixa;
-
-  //Dialegs inicials de l'accio
-  cout<<"MENU DE BAIXA"<<endl;
-  cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
-
-  //Menu Alta
-  t=false;
-  while (!t){
-   cout<<"1. Eliminar usuari"<<endl;
-   cout<<"2. Sortir"<<endl;
-
-  cout<<"Que vols fer?: ";
-  cin>>numbaixa;
-
- switch (numbaixa){
-   case 1: t=true;
-      break;
-   case 2: t=true; cout<<endl<<"MENU D'INICI"<<endl;
-      break;
-   default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
-   }//End switch
- }//End While
-t=false;
+void inicisesio(string& nomusuari, usuari& usuariactual){
+   string username, password;
+   cout<<"Nom d'usuari: ";
+   cin>>username;
+   cout<<endl<<"Contrasenya: ";
+   cin>>password;
+   nomusuari = username;
 }
