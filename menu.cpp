@@ -23,7 +23,7 @@ struct usuari{ //TUPLA ON ES GUARDEN LES DADES DE LA POBLACI�
 void llegirusuaris (int& nusuaris, vector<usuari>& usuaris);
 void llegirdades (vector<ciutat>& ciutats);
 void nouusuari (int& nusuaris, vector<usuari>& usuaris);
-void esborrarusuari ();
+void esborrarusuari (int& nusuaris, vector<usuari>& usuaris);
 void inicisesio(string& nomusuari, usuari& usuariactual);
 void finalitzar(int& nusuaris, vector<usuari>& usuaris);
 void menu1(int& seleccio, string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual);
@@ -103,13 +103,30 @@ void nouusuari (int& nusuaris, vector<usuari>& usuaris){
    nusuaris = usuaris.size();
 }
 
-void esborrarusuari (){
+void esborrarusuari (int& nusuaris, vector<usuari>& usuaris){
+   cout<<"num usuaris: "<<nusuaris<<endl;
    string username, password;
    cout<<"Nom d'usuari: ";
    cin>>username;
    cout<<endl<<"Contrasenya: ";
    cin>>password;
-   
+   bool trobat = false;
+   int indice = 0;
+   for (int i = 0; i < nusuaris; i++)
+   {
+      if(usuaris[i].nom == username && usuaris[i].contrasenya == password){
+         trobat = true;
+         usuaris.erase(usuaris.begin() + indice);
+         nusuaris--;
+         break;
+      }
+      indice++;
+   }
+   if (trobat == false){
+      cout<<"Usuari no trobat, nom d'usuari o contrasenya incorrecte."<<endl;
+   }
+   cout<<"num usuaris: "<<nusuaris<<endl;
+   finalitzar(nusuaris, usuaris);
 }
 
 void inicisesio(string& nomusuari, usuari& usuariactual){
@@ -144,7 +161,7 @@ void menu1(int& seleccio, string& name, string& nomusuari, int& nusuaris, vector
          break;
       case 2: nouusuari(nusuaris, usuaris);
          break;
-      case 3: esborrarusuari();
+      case 3: esborrarusuari(nusuaris, usuaris);
          break;
       case 4: finalitzar(nusuaris, usuaris); cout<<"Gracies per utilitzar ___.";
          break;
