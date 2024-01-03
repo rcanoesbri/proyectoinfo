@@ -23,11 +23,11 @@ struct pais{
    string codipais;
    vector<long long int> pactiva;
    vector<long long int> ptotal;
-}
+};
 
 void llegirusuaris (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void llegirdades (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
-void llegirpaisos (tring& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, usuari& usuariactual, int& pos);
+void llegirpaisos ();
 void nouusuari (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void esborrarusuari (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
@@ -37,8 +37,12 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
 void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
-void creixementpactiva(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
+void creixementpactivaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
+int menupaisociutat();
+void cercapaisos();
+void comparapaisos();
+void paisosguardats();
 
 int main (){
    //Declarar Variables
@@ -216,13 +220,52 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
    cout<<"Que vols fer?: ";
    cin>>seleccio;
    cout<<endl;
-
-   switch (seleccio){
-      case 1: cercaciutat(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+   int eleccio;
+   switch (seleccio){  //TODO crear menus pais o ciutat
+      case 1: eleccio = menupaisociutat();
+         switch (eleccio)
+         {
+         case 1:
+            cercapaisos();
+            break;
+         case 2:
+            cercaciutat(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         default:
+            cout<<"Numero introduit no valid."<<endl;
+            menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         }
          break;
-      case 2: comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      case 2: eleccio = menupaisociutat();
+         switch (eleccio)
+         {
+         case 1:
+            comparapaisos();
+            break;
+         case 2:
+            comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         default:
+            cout<<"Numero introduit no valid."<<endl;
+            menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         }
          break;
-      case 3: ciutatsguardades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      case 3: eleccio = menupaisociutat();
+         switch (eleccio)
+         {
+         case 1:
+            paisosguardats();
+            break;
+         case 2:
+            ciutatsguardades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         default:
+            cout<<"Numero introduit no valid."<<endl;
+            menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+            break;
+         }
          break;
       case 4: editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
          break;
@@ -244,6 +287,16 @@ void finalitzar(string& name, string& nomusuari, int& nusuaris, vector<usuari>& 
       }
       UsuarisOUT<<"FIN"<<endl;
    }
+}
+
+int menupaisociutat(){
+   int eleccio;
+   cout<<endl<<"Vols cercar informacio de ciutats o paisos?"<<endl;
+   cout<<"1. Paisos"<<endl;
+   cout<<"2. Ciutats"<<endl;
+   cout<<"Introdueix el numero del que vols buscar: ";
+   cin>>eleccio;
+   return eleccio;
 }
 
 void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos){
@@ -272,7 +325,7 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
          cout<<"    Poblacio activa total:"<<city.Ptotal[x]<<endl;
          any++;
       }
-      cout<<"Vols guardar la ciutat entre les teves preferides? ";
+      cout<<"Vols guardar la ciutat entre les teves preferides? "; //TODO que fer si ja esta guardada
       cin>>seleccio;
       if (seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          usuariactual.ciutatspreferides.push_back(nomciutat);
@@ -323,7 +376,7 @@ void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usu
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
 }
 
-void creixementpactiva(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos){
+void creixementpactivaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos){
 
 }// TODO creixement poblacio activa d'una ciutat
 
@@ -333,7 +386,7 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
    cout<<endl<<"Que vols editar? "<<endl;
    cout<<"1. Nom d'usuari"<<endl;
    cout<<"2. Contrasenya"<<endl;
-   cout<<"3. Eliminar ciutats preferides"<<endl;
+   cout<<"3. Eliminar paisos/ciutats preferides"<<endl;
    cout<<"4. Tornar al menu anterior"<<endl;
    cout<<"Introdueix el numero: ";
    cin>>seleccio;
@@ -353,13 +406,13 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       usuaris[pos] = usuariactual;
       editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
       break;
-   case 3:
+   case 3:  //TODO eliminar paisos
       int seleccio;
       cout<<endl<<"Ciutats preferides: "<<endl;
       for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
          cout<<i+1<<". "<<usuariactual.ciutatspreferides[i]<<endl;
       }
-      cout<<endl<<"Introdueix el numero de la ciutat que vulguis eliminar: ";
+      cout<<endl<<"Introdueix el numero de la ciutat o pais que vulguis eliminar: ";
       cin>>seleccio;
       usuariactual.ciutatspreferides.erase(usuariactual.ciutatspreferides.begin() + (seleccio - 1));
       usuaris[pos] = usuariactual;
@@ -373,6 +426,19 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
    }
 }
 
-void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, usuari& usuariactual, int& pos){
+//TODO accions paisos
+void llegirpaisos (){
+
+}
+
+void paisosguardats (){
+
+}
+
+void comparapaisos (){
+
+}
+
+void cercapaisos (){
 
 }
