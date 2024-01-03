@@ -339,7 +339,87 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
 }
 
 void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
-   
+   string ciutat1, ciutat2;
+   ciutat city1, city2;
+   int any;
+   cout<<endl<<"Comparacio de Ciutats:"<<endl;
+   cout<<"Quines dos ciutats vols comparar?"<<endl;
+   cout<<"Ciutat 1: ";
+   cin>>ciutat1;
+   bool ciutattrobada = false;
+   for(int i = 0; i<ciutats.size(); i++){
+      if(ciutats[i].nom == ciutat1){
+         ciutattrobada = true;
+         city1 = ciutats[i];
+         break;
+      }
+   }
+   if (ciutattrobada == false){
+      string seleccio;
+      cout<<"Ciutat no trobada"<<endl;
+      cout<<"Vols tornar a intentar la cerca? ";
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+   }
+   cout<<"Ciutat 2: ";
+   cin>>ciutat2;
+   ciutattrobada = false;
+   for(int i = 0; i<ciutats.size(); i++){
+      if(ciutats[i].nom == ciutat2){
+         ciutattrobada = true;
+         city2 = ciutats[i];
+         break;
+      }
+   }
+   if (ciutattrobada == false){
+      string seleccio;
+      cout<<"Ciutat no trobada"<<endl;
+      cout<<"Vols tornar a intentar la cerca? ";
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+   }
+   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+   cin>>any;
+   while(any < 2013 || any > 2022) {
+      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+      cin>>any;
+      if (any < 2013 || any > 2022){
+         cout<<"Introdueix un any valid: ";
+      }
+   }
+   cout<<"Poblacio activa "<<ciutat1<<" a l'any "<<any<<endl;
+   cout<<"   Homes: "<<city1.Phomes[any - 2013]<<endl;
+   cout<<"   Dones: "<<city1.Pdones[any - 2013]<<endl;
+   cout<<"   Total: "<<city1.Ptotal[any - 2013]<<endl;
+   cout<<endl<<"Poblacio activa "<<ciutat2<<" a l'any "<<any<<endl;
+   cout<<"   Homes: "<<city2.Phomes[any - 2013]<<endl;
+   cout<<"   Dones: "<<city2.Pdones[any - 2013]<<endl;
+   cout<<"   Total: "<<city2.Ptotal[any - 2013]<<endl<<endl;
+   if(city1.Phomes[any - 2013] > city2.Phomes[any - 2013]) {
+      double percent = (double(city1.Phomes[any - 2013]))/(double(city2.Phomes[any - 2013]))*100.00 - 100.00;
+      cout<<"La poblacio activa d'homes de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+   } else if (city1.Phomes[any - 2013] < city2.Phomes[any - 2013]) {
+      double percent = (double(city2.Phomes[any - 2013]))/(double(city1.Phomes[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa d'homes de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl;
+   }
+   if(city1.Pdones[any - 2013] > city2.Pdones[any - 2013]) {
+      double percent = (double(city1.Pdones[any - 2013])/(city2.Pdones[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa de dones de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+   } else if (city1.Pdones[any - 2013] < city2.Pdones[any - 2013]) {
+      double percent = (double(city2.Pdones[any - 2013])/(city1.Pdones[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa de dones de "<<city2.nom<<" es un"<<percent<<"% mes gran."<<endl;
+   }
+   if(city1.Ptotal[any - 2013] > city2.Ptotal[any - 2013]) {
+      double percent = (double(city1.Ptotal[any - 2013]))/(double(city2.Ptotal[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa total de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+   } else if (city1.Ptotal[any - 2013] < city2.Ptotal[any - 2013]) {
+      double percent = (double(city2.Ptotal[any - 2013]))/(double(city1.Ptotal[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa total de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+   }
 } // TODO comparar ciutats
 
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
@@ -440,7 +520,6 @@ void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari
    while(ptotalpaisosIN>>nompais){
       pais x;
       x.nom = nompais;
-      cout<<nompais<<endl;
       pactivapaisosIN>>nompais;
       ptotalpaisosIN>>codipais;
       pactivapaisosIN>>codipais;
