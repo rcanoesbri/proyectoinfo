@@ -376,7 +376,7 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
    if (ciutattrobada == false){
       string seleccio;
       cout<<"Ciutat no trobada"<<endl;
-      cout<<"Vols tornar a intentar la cerca? ";
+      cout<<"Vols tornar a intentar la cerca? "; //TODO com sortir si no vol continuar la cerca?? (evitar un loop).
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
@@ -418,9 +418,10 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       cout<<"La poblacio activa total de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
    } else if (city1.Ptotal[any - 2013] < city2.Ptotal[any - 2013]) {
       double percent = (double(city2.Ptotal[any - 2013]))/(double(city1.Ptotal[any - 2013]))*100 - 100.00;
-      cout<<"La poblacio activa total de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+      cout<<"La poblacio activa total de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
    }
-} // TODO comparar ciutats
+   menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+}
 
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    int seleccio;
