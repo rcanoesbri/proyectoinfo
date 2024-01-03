@@ -147,15 +147,14 @@ void esborrarusuari (string& name, string& nomusuari, int& nusuaris, vector<usua
 }
 
 void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos){
-   string username, password;
+   string password;
    cout<<"Nom d'usuari: ";
-   cin>>username;
+   cin>>nomusuari;
    cout<<"Contrasenya: ";
    cin>>password;
-   nomusuari = username;
    bool found = false;
    for(int i = 0; i<nusuaris; i++){
-      if(usuaris[i].nom == username && usuaris[i].contrasenya == password){
+      if(usuaris[i].nom == nomusuari && usuaris[i].contrasenya == password){
          found = true;
          usuariactual = usuaris[i];
          pos = i;
@@ -165,7 +164,7 @@ void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
       cout<<endl<<"Usuari no trobat. Usuari o contrasenya erronia."<<endl;
       menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
    } else if(found == true){
-      cout<<endl<<"Benvingut "<<username<<endl;
+      cout<<endl<<"Benvingut "<<nomusuari<<endl;
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
    }
 }
@@ -204,8 +203,9 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
    cout<<"1. Cerca una ciutat o pais"<<endl;
    cout<<"2. Compara dos ciutats o paisos"<<endl;
    cout<<"3. Buscar llista ciutats preferides"<<endl;
-   cout<<"4. Tornar al menu anterior"<<endl;
-   cout<<"5. Sortir"<<endl;
+   cout<<"4. Editar perfil"<<endl;
+   cout<<"5. Tornar al menu anterior"<<endl;
+   cout<<"6. Sortir"<<endl;
 
    cout<<"Que vols fer?: ";
    cin>>seleccio;
@@ -218,9 +218,11 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 3: ciutatsguardades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
          break;
-      case 4: menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      case 4: editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
          break;
-      case 5: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos); cout<<"Gracies per utilitzar ___.";
+      case 5: menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+         break;
+      case 6: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos); cout<<"Gracies per utilitzar ___.";
          break;
       default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
    }
@@ -270,7 +272,6 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
          usuariactual.ciutatspreferides.push_back(nomciutat);
          usuaris[pos] = usuariactual;
          finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
-         cout<<"guardar"<<endl;
       }
    }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
@@ -329,5 +330,47 @@ void creixementpactiva(string& name, string& nomusuari, int& nusuaris, vector<us
 }
 
 void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos){
-
+   int seleccio;
+   string contranova;
+   cout<<endl<<"Que vols editar? "<<endl;
+   cout<<"1. Nom d'usuari"<<endl;
+   cout<<"2. Contrasenya"<<endl;
+   cout<<"3. Eliminar ciutats preferides"<<endl;
+   cout<<"4. Tornar al menu anterior"<<endl;
+   cout<<"Introdueix el numero: ";
+   cin>>seleccio;
+   switch (seleccio)
+   {
+   case 1:
+      cout<<endl<<"Nou nom d'usuari: ";
+      cin>>nomusuari;
+      usuariactual.nom = nomusuari;
+      usuaris[pos] = usuariactual;
+      editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      break;
+   case 2:
+      cout<<endl<<"Nova contrasenya: ";
+      cin>>contranova;
+      usuariactual.contrasenya = contranova;
+      usuaris[pos] = usuariactual;
+      editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      break;
+   case 3:
+      int seleccio;
+      cout<<endl<<"Ciutats preferides: "<<endl;
+      for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
+         cout<<i+1<<". "<<usuariactual.ciutatspreferides[i]<<endl;
+      }
+      cout<<endl<<"Introdueix el numero de la ciutat que vulguis eliminar: ";
+      cin>>seleccio;
+      usuariactual.ciutatspreferides.erase(usuariactual.ciutatspreferides.begin() + (seleccio - 1));
+      usuaris[pos] = usuariactual;
+      editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      break;
+   case 4:
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos);
+      break;
+   default:
+      break;
+   }
 }
