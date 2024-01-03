@@ -18,8 +18,16 @@ struct usuari{
    vector<string> ciutatspreferides;
 };
 
+struct pais{
+   string nom;
+   string codipais;
+   vector<long long int> pactiva;
+   vector<long long int> ptotal;
+}
+
 void llegirusuaris (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void llegirdades (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
+void llegirpaisos (tring& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, usuari& usuariactual, int& pos);
 void nouusuari (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void esborrarusuari (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
 void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos);
@@ -363,4 +371,8 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
    default:
       break;
    }
+}
+
+void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, usuari& usuariactual, int& pos){
+
 }
