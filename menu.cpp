@@ -604,6 +604,80 @@ int seleccio;
 };
 
 void comparapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
+string pais1, pais2;
+   pais country1, country2;
+   int any;
+   cout<<endl<<"Comparacio de paisos:"<<endl;
+   cout<<"Quins dos paisos vols comparar?"<<endl;
+   cout<<"Pais 1: ";
+   cin>>pais1;
+   bool paistrobat = false;
+   for(int i = 0; i<paisos.size(); i++){
+      if(paisos[i].nom == pais1){
+         paistrobat = true;
+         country1 = paisos[i];
+         break;
+      }
+   }
+   if (paistrobat == false){
+      string seleccio;
+      cout<<"Pais no trobat"<<endl;
+      cout<<"Vols tornar a intentar la cerca? ";
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+   }
+   cout<<"Pais 2: ";
+   cin>>pais2;
+   paistrobat = false;
+   for(int i = 0; i<paisos.size(); i++){
+      if(paisos[i].nom == pais2){
+         paistrobat = true;
+         country2 = paisos[i];
+         break;
+      }
+   }
+   if (paistrobat == false){
+      string seleccio;
+      cout<<"Pais no trobat"<<endl;
+      cout<<"Vols tornar a intentar la cerca? "; //TODO com sortir si no vol continuar la cerca?? (evitar un loop).
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+   }
+   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+   cin>>any;
+   while(any < 2013 || any > 2022) {
+      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+      cin>>any;
+      if (any < 2013 || any > 2022){
+         cout<<"Introdueix un any valid: ";
+      }
+   }
+   cout<<"Poblacio activa i total "<<pais1<<" a l'any "<<any<<endl;
+   cout<<"   Activa: "<<country1.pactiva[any - 2013]<<endl;
+   cout<<"   Total: "<<country1.ptotal[any - 2013]<<endl;
+   cout<<endl<<"Poblacio activa i total "<<pais2<<" a l'any "<<any<<endl;
+   cout<<"   Activa: "<<country2.pactiva[any - 2013]<<endl;
+   cout<<"   Total: "<<country2.ptotal[any - 2013]<<endl<<endl;
+
+   if(country1.pactiva[any - 2013] > country2.pactiva[any - 2013]) {
+      double percent = (double(country1.pactiva[any - 2013]))/(double(country2.pactiva[any - 2013]))*100.00 - 100.00;
+      cout<<"La poblacio activa d'homes de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+   } else if (country1.pactiva[any - 2013] < country2.pactiva[any - 2013]) {
+      double percent = (double(country2.pactiva[any - 2013]))/(double(country1.pactiva[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa d'homes de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl;
+   }
+   if(country1.ptotal[any - 2013] > country2.ptotal[any - 2013]) {
+      double percent = (double(country1.ptotal[any - 2013]))/(double(country2.ptotal[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa total de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+   } else if (country1.ptotal[any - 2013] < country2.ptotal[any - 2013]) {
+      double percent = (double(country2.ptotal[any - 2013]))/(double(country1.ptotal[any - 2013]))*100 - 100.00;
+      cout<<"La poblacio activa total de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
+   }
+   menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 
 };
 
