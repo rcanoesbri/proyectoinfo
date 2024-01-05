@@ -38,7 +38,6 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
 void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
 void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
-void creixementpactivaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
 void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
 int menupaisociutat();
 void cercapaisos(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos);
@@ -95,7 +94,7 @@ void llegirusuaris (string& name, string& nomusuari, int& nusuaris, vector<usuar
 }
 
 void llegirdades (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
-   ifstream Ptotal("poblacioactiva_total.csv"); //TODO treure accents (replace)
+   ifstream Ptotal("poblacioactiva_total.csv");
    ifstream Phomes("poblacioactiva_homes.csv");
    ifstream Pdones("poblacioactiva_dones.csv");
    string g, nomciutat;
@@ -231,7 +230,7 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
    cin>>seleccio;
    cout<<endl;
    int eleccio;
-   switch (seleccio){  //TODO crear menus pais o ciutat
+   switch (seleccio){
       case 1: eleccio = menupaisociutat();
          switch (eleccio)
          {
@@ -266,10 +265,20 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          switch (eleccio)
          {
          case 1:
+            if(usuariactual.paisospreferits.size() == 0){
+               cout<<"No tens cap Pais guardat. ";
+               menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+            } else {
             paisosguardats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+            }
             break;
          case 2:
+            if(usuariactual.ciutatspreferides.size() == 0){
+               cout<<"No tens cap ciutat guardada. ";
+               menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+            } else {
             ciutatsguardades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+            }
             break;
          default:
             cout<<"Numero introduit no valid."<<endl;
@@ -298,7 +307,7 @@ void finalitzar(string& name, string& nomusuari, int& nusuaris, vector<usuari>& 
       UsuarisOUT<<"FIN"<<" ";
       for(int npaisos = 0; npaisos < usuaris[i].paisospreferits.size(); npaisos++){
          UsuarisOUT<<usuaris[i].paisospreferits[npaisos]<<" ";
-   }
+      }
       UsuarisOUT<<"END"<<endl;
    }
 }
@@ -339,12 +348,23 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
          cout<<"    Poblacio activa total:"<<city.Ptotal[x]<<endl;
          any++;
       }
-      cout<<"Vols guardar la ciutat entre les teves preferides? "; //TODO que fer si ja esta guardada
-      cin>>seleccio;
-      if (seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
-         usuariactual.ciutatspreferides.push_back(nomciutat);
-         usuaris[pos] = usuariactual;
-         finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      bool ciutatguardada = false;
+      for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
+         if(nompais == usuariactual.ciutatspreferides[i]){
+            ciutatguardada = true;
+            break;
+         }
+      }
+      if(!ciutatguardada){
+         cout<<"Vols guardar la ciutat entre les teves preferides? ";
+         cin>>seleccio;
+         if (seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+            usuariactual.ciutatspreferides.push_back(nomciutat);
+            usuaris[pos] = usuariactual;
+            finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         }
+      } else if (ciutatguardada){
+         cout<<"Ja tens guardada aquesta ciutat."<<endl;
       }
    }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
@@ -373,7 +393,10 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
-      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    }
    cout<<"Ciutat 2: ";
    cin>>ciutat2;
@@ -388,11 +411,14 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
    if (ciutattrobada == false){
       string seleccio;
       cout<<"Ciutat no trobada"<<endl;
-      cout<<"Vols tornar a intentar la cerca? "; //TODO com sortir si no vol continuar la cerca?? (evitar un loop).
+      cout<<"Vols tornar a intentar la cerca? ";
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
-      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    }
    cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
    cin>>any;
@@ -471,10 +497,6 @@ void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usu
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 }
 
-void creixementpactivaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
-
-}// TODO creixement poblacio activa d'una ciutat
-
 void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    int seleccio;
    string contranova;
@@ -501,7 +523,7 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       usuaris[pos] = usuariactual;
       editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
-   case 3:  //TODO eliminar paisos
+   case 3:
       int eleccio;
       eleccio = menupaisociutat();
          switch (eleccio)
@@ -542,7 +564,6 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
    }
 }
 
-//TODO accions paisos
 void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    ifstream pactivapaisosIN("poblacioactivapaisos.csv");
    ifstream ptotalpaisosIN("poblaciontotalpaises.csv");
@@ -626,7 +647,10 @@ string pais1, pais2;
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
-      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    }
    cout<<"Pais 2: ";
    cin>>pais2;
@@ -641,11 +665,14 @@ string pais1, pais2;
    if (paistrobat == false){
       string seleccio;
       cout<<"Pais no trobat"<<endl;
-      cout<<"Vols tornar a intentar la cerca? "; //TODO com sortir si no vol continuar la cerca?? (evitar un loop).
+      cout<<"Vols tornar a intentar la cerca? ";
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
-      } else menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    }
    cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
    cin>>any;
@@ -665,24 +692,24 @@ string pais1, pais2;
 
    if(country1.pactiva[any - 2013] > country2.pactiva[any - 2013]) {
       double percent = (double(country1.pactiva[any - 2013]))/(double(country2.pactiva[any - 2013]))*100.00 - 100.00;
-      cout<<"La poblacio activa d'homes de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      cout<<"La poblacio activa de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl;
    } else if (country1.pactiva[any - 2013] < country2.pactiva[any - 2013]) {
       double percent = (double(country2.pactiva[any - 2013]))/(double(country1.pactiva[any - 2013]))*100 - 100.00;
-      cout<<"La poblacio activa d'homes de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      cout<<"La poblacio activa de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl;
    }
    if(country1.ptotal[any - 2013] > country2.ptotal[any - 2013]) {
       double percent = (double(country1.ptotal[any - 2013]))/(double(country2.ptotal[any - 2013]))*100 - 100.00;
-      cout<<"La poblacio activa total de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+      cout<<"La poblacio total de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
    } else if (country1.ptotal[any - 2013] < country2.ptotal[any - 2013]) {
       double percent = (double(country2.ptotal[any - 2013]))/(double(country1.ptotal[any - 2013]))*100 - 100.00;
-      cout<<"La poblacio activa total de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
+      cout<<"La poblacio total de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
    }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 
 };
 
 void cercapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
- string nompais, seleccio;
+   string nompais, seleccio;
    cout<<endl<<"Cercador de paisos: "<<endl<<"Introdueix el nom del pais que vulguis buscar. Fes servir _ en lloc d'espais."<<endl<<"Pais: ";
    cin>>nompais;
    pais country;
@@ -705,13 +732,24 @@ void cercapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>
          cout<<"    Poblacio activa: "<<country.pactiva[x]<<endl;
          cout<<"    Poblacio total: "<<country.ptotal[x]<<endl;
          any++;
-       }
-      cout<<"Vols guardar el pais entre els teus preferits? "; //TODO que fer si ja esta guardada
-        cin>>seleccio;
-        if (seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
-         usuariactual.paisospreferits.push_back(nompais);
-         usuaris[pos] = usuariactual;
-         finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      }
+      bool paisguardat = false;
+      for(int i=0; i<usuariactual.paisospreferits.size(); i++){
+         if(nompais == usuariactual.paisospreferits[i]){
+            paisguardat = true;
+            break;
+         }
+      }
+      if(!paisguardat){
+         cout<<"Vols guardar el pais entre els teus preferits? ";
+         cin>>seleccio;
+         if (seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+            usuariactual.paisospreferits.push_back(nompais);
+            usuaris[pos] = usuariactual;
+            finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         }
+      } else if (paisguardat){
+         cout<<"Ja tens guardat aquest pais."<<endl;
       }
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }
