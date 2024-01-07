@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <windows.h>
 #include <vector>
-#include <ctype.h>
 using namespace std;
 
 struct ciutat{
@@ -211,7 +209,7 @@ void menu1(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 4: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___.";
          break;
-      default: cout<<"Si us  plau, introdueix un numero valid"<<endl; menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      default: cout<<"Si us  plau, introdueix un numero valid"; menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }//End switch
 }
 
@@ -292,7 +290,7 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 6: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___.";
          break;
-      default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
+      default: cout<<"Si us  plau, introdueix un numero valid"; menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }
 }
 
@@ -350,7 +348,7 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
       }
       bool ciutatguardada = false;
       for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
-         if(nompais == usuariactual.ciutatspreferides[i]){
+         if(nomciutat == usuariactual.ciutatspreferides[i]){
             ciutatguardada = true;
             break;
          }
@@ -560,6 +558,8 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    default:
+      cout<<endl<<"Si us  plau, introdueix un numero valid"<<endl;
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    }
 }
