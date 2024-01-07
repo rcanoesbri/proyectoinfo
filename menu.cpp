@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <windows.h>
 #include <vector>
-#include <ctype.h>
 using namespace std;
 
 struct ciutat{
@@ -134,6 +132,7 @@ void nouusuari (string& name, string& nomusuari, int& nusuaris, vector<usuari>& 
    cout<<endl<<"Numero d'usuaris: "<<usuaris.size()<<endl;
    nusuaris = usuaris.size();
    cout<<endl<<"Benvingut "<<username<<endl;
+   finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 }
 
@@ -209,7 +208,7 @@ void menu1(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 3: esborrarusuari(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
          break;
-      case 4: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___.";
+      case 4: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___."; exit(1);
          break;
       default: cout<<"Si us  plau, introdueix un numero valid"<<endl; menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }//End switch
@@ -290,7 +289,7 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 5: menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
          break;
-      case 6: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___.";
+      case 6: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___."; exit(1);
          break;
       default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
    }
@@ -350,7 +349,7 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
       }
       bool ciutatguardada = false;
       for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
-         if(nompais == usuariactual.ciutatspreferides[i]){
+         if(nomciutat == usuariactual.ciutatspreferides[i]){
             ciutatguardada = true;
             break;
          }
@@ -375,6 +374,17 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
    ciutat city1, city2;
    int any;
    cout<<endl<<"Comparacio de Ciutats:"<<endl;
+   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+   cin>>any;
+   while(any < 2013 || any > 2022) {
+      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+      cin>>any;
+      if (any < 2013 || any > 2022){
+         cout<<"Introdueix un any valid: ";
+         comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
+   }
    cout<<"Quines dos ciutats vols comparar?"<<endl;
    cout<<"Ciutat 1: ";
    cin>>ciutat1;
@@ -393,10 +403,16 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       cin>>seleccio;
       if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
          comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
       } else{
          menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
          return;
       }
+   }
+   if(city1.Ptotal[any-2013] == 0){
+      cout<<"No hi ha dades d'aquesta ciutat per a l'any seleccionat. "<<endl;
+      comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
    }
    cout<<"Ciutat 2: ";
    cin>>ciutat2;
@@ -420,14 +436,10 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
          return;
       }
    }
-   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
-   cin>>any;
-   while(any < 2013 || any > 2022) {
-      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
-      cin>>any;
-      if (any < 2013 || any > 2022){
-         cout<<"Introdueix un any valid: ";
-      }
+   if(city2.Ptotal[any-2013] == 0){
+      cout<<"No hi ha dades d'aquesta ciutat per a l'any seleccionat. "<<endl;
+      comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
    }
    cout<<"Poblacio activa "<<ciutat1<<" a l'any "<<any<<endl;
    cout<<"   Homes: "<<city1.Phomes[any - 2013]<<endl;
@@ -514,6 +526,7 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       cin>>nomusuari;
       usuariactual.nom = nomusuari;
       usuaris[pos] = usuariactual;
+      finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    case 2:
@@ -521,6 +534,7 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       cin>>contranova;
       usuariactual.contrasenya = contranova;
       usuaris[pos] = usuariactual;
+      finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       editarperfil(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    case 3:
@@ -591,7 +605,7 @@ void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari
 
 void paisosguardats (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
 int seleccio;
-   cout<<"Paisos preferits: "<<endl;
+   cout<<endl<<"Paisos preferits: "<<endl;
    for(int i=0; i<usuariactual.paisospreferits.size(); i++){
       cout<<i+1<<". "<<usuariactual.paisospreferits[i]<<endl;
    }
@@ -618,7 +632,6 @@ int seleccio;
          cout<<"  "<<any<<": "<<endl;
          cout<<"    Poblacio activa:"<<country.pactiva[x]<<endl;
          cout<<"    Poblacio total:"<<country.ptotal[x]<<endl;
-        
       }
    }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
@@ -629,6 +642,15 @@ string pais1, pais2;
    pais country1, country2;
    int any;
    cout<<endl<<"Comparacio de paisos:"<<endl;
+   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+   cin>>any;
+   while(any < 2013 || any > 2022) {
+      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
+      cin>>any;
+      if (any < 2013 || any > 2022){
+         cout<<"Introdueix un any valid: ";
+      }
+   }
    cout<<"Quins dos paisos vols comparar?"<<endl;
    cout<<"Pais 1: ";
    cin>>pais1;
@@ -652,6 +674,11 @@ string pais1, pais2;
          return;
       }
    }
+   if(country1.ptotal[any-2013] == 0){
+      cout<<"No hi ha dades d'aquest pais per a l'any seleccionat. "<<endl;
+      comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
+   }
    cout<<"Pais 2: ";
    cin>>pais2;
    paistrobat = false;
@@ -674,14 +701,10 @@ string pais1, pais2;
          return;
       }
    }
-   cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
-   cin>>any;
-   while(any < 2013 || any > 2022) {
-      cout<<endl<<"Introdueix l'any en el que vulguis fer la comparacio (2013 - 2022): ";
-      cin>>any;
-      if (any < 2013 || any > 2022){
-         cout<<"Introdueix un any valid: ";
-      }
+   if(country2.ptotal[any-2013] == 0){
+      cout<<"No hi ha dades d'aquest pais per a l'any seleccionat. "<<endl;
+      comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
    }
    cout<<"Poblacio activa i total "<<pais1<<" a l'any "<<any<<endl;
    cout<<"   Activa: "<<country1.pactiva[any - 2013]<<endl;
