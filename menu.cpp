@@ -210,7 +210,7 @@ void menu1(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 4: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___."; exit(1);
          break;
-      default: cout<<"Si us  plau, introdueix un numero valid"<<endl; menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      default: cout<<"Si us  plau, introdueix un numero valid"; menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }//End switch
 }
 
@@ -291,7 +291,7 @@ void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
          break;
       case 6: finalitzar(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); cout<<"Gracies per utilitzar ___."; exit(1);
          break;
-      default: cout<<"Si us  plau, introdueix un numero valid"<<endl;
+      default: cout<<"Si us  plau, introdueix un numero valid"; menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }
 }
 
@@ -574,6 +574,8 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    default:
+      cout<<endl<<"Si us  plau, introdueix un numero valid"<<endl;
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    }
 }
