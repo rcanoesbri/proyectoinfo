@@ -1,7 +1,7 @@
 ﻿TIME  2013  2014  2015  2016  2017  2018  2019  2020  2021  2022
 Gravenhage  0  238000  295000  298000  0  0  310709  312840  319000  330000
 Hertogenbosch  0  76000  79000  77000  0  0  82844  81565  88000  88000
-A_Coruña  105321  103330  0  102913  102651  104531  103732  102180  102442  103209
+A_Coruna  105321  103330  0  102913  102651  104531  103732  102180  102442  103209
 Aachen  143200  144300  144151  148059  148255  148721  149682  146737  163000  0
 Aalborg  0  0  0  0  0  0  0  0  0  0
 Aberdeen  0  0  0  144700  143900  149100  0  0  0  0
@@ -718,15 +718,6 @@ Arhus  0  0  0  0  0  0  0  0  0  0
 Orebro  0  0  0  0  54947  56657  0  0  0  0
 Usti_nad_Labem  0  0  0  0  0  0  0  0  0  0
 Zilina  0  0  0  0  0  0  0  0  0  0
-                    
-Special_value                    
-0  not_available                  
-Available_flags0                    
-b  break_in_time_series                  
-d  definition_differs_(see_metadata)                  
-e  estimated                  
-u  low_reliability                  
-                    
                     
                     
                     
