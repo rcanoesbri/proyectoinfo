@@ -1,0 +1,92 @@
+
+
+
+Poblacio activa i total de italia per anys (2013-2022):
+  2013: 
+    Poblacio activa: 25287655
+    Poblacio total: 60233948
+  2014: 
+    Poblacio activa: 25689865
+    Poblacio total: 60789140
+  2015: 
+    Poblacio activa: 25654398
+    Poblacio total: 60730582
+  2016: 
+    Poblacio activa: 25932536
+    Poblacio total: 60627498
+  2017: 
+    Poblacio activa: 26103399
+    Poblacio total: 60536709
+  2018: 
+    Poblacio activa: 26164164
+    Poblacio total: 60421760
+  2019: 
+    Poblacio activa: 25907430
+    Poblacio total: 59729081
+  2020: 
+    Poblacio activa: 25126337
+    Poblacio total: 59438851
+  2021: 
+    Poblacio activa: 25087249
+    Poblacio total: 59133173
+  2022: 
+    Poblacio activa: 25517954
+    Poblacio total: 58940425
+
+
+
+Poblacio activa de sevilla per anys (2013-2022):
+  2013: 
+    Poblacio activa homes:370395
+    Poblacio activa dones:319130
+    Poblacio activa total:689525
+  2014: 
+    Poblacio activa homes:369408
+    Poblacio activa dones:322700
+    Poblacio activa total:692108
+  2015: 
+    Poblacio activa homes:406071
+    Poblacio activa dones:350100
+    Poblacio activa total:756171
+  2016: 
+    Poblacio activa homes:400880
+    Poblacio activa dones:343569
+    Poblacio activa total:744448
+  2017: 
+    Poblacio activa homes:398261
+    Poblacio activa dones:342646
+    Poblacio activa total:740908
+  2018: 
+    Poblacio activa homes:403941
+    Poblacio activa dones:349363
+    Poblacio activa total:753304
+  2019: 
+    Poblacio activa homes:401701
+    Poblacio activa dones:351878
+    Poblacio activa total:753579
+  2020: 
+    Poblacio activa homes:397183
+    Poblacio activa dones:342127
+    Poblacio activa total:739310
+  2021: 
+    Poblacio activa homes:404598
+    Poblacio activa dones:358200
+    Poblacio activa total:762799
+  2022: 
+    Poblacio activa homes:408385
+    Poblacio activa dones:361159
+    Poblacio activa total:769544
+
+
+Poblacio activa i total italia a l'any 2022
+   Activa: 25517954
+   Total: 58940425
+
+Poblacio activa i total francia a l'any 2022
+   Activa: 31666462
+   Total: 67971311
+
+La poblacio activa de francia es un 24.0948% mes gran.
+La poblacio total de francia es un 15.3221% mes gran.
+
+
