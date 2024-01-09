@@ -197,7 +197,7 @@ void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
       cout<<endl<<"Usuari no trobat. Usuari o contrasenya erronia."<<endl;
       menu1(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    } else if(found == true){
-      cout<<endl<<"Benvingut "<<nomusuari<<endl;
+      cout<<endl<<"Benvingut "<<nomusuari;
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }
 }
@@ -205,8 +205,8 @@ void inicisessio(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
 void menu1(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    //Menu Inicial
    char seleccio;
-   cout<<endl<<endl<<"Indica que vols fer escrivint el numero corresponent"<<endl;
-   cout<<"MENU INICIAL: "<<endl;
+   cout<<endl<<"MENU INICIAL: "<<endl;
+   cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
    cout<<"1. Iniciar Sessio"<<endl;
    cout<<"2. Registrar Nou Usuari"<<endl;
    cout<<"3. Esborrar Usuari"<<endl;
@@ -231,8 +231,8 @@ void menu1(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuar
 
 void menu2(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    char seleccio;
-   cout<<endl<<endl<<"Indica que vols fer escrivint el numero corresponent"<<endl;
-   cout<<"MENU DE CERCA: "<<endl;
+   cout<<endl<<endl<<"MENU DE CERCA: "<<endl;
+   cout<<"Indica que vols fer escrivint el numero corresponent"<<endl;
    cout<<"1. Cerca una ciutat o pais"<<endl;
    cout<<"2. Compara dos ciutats o paisos"<<endl;
    cout<<"3. Buscar llista de ciutats o paisos preferits"<<endl;
@@ -371,6 +371,14 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
    }
    if(ciutattrobada == false){
       cout<<endl<<"Ciutat no trobada a la base de dades."<<endl;
+      cout<<"Vols tornar a intentar la cerca?  (Si/No): ";
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         cercaciutat(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    } else if(ciutattrobada == true){
       cout<<endl<<"Poblacio activa de "<<nomciutat<<" per anys (2013-2022):"<<endl;
       int any = 2013;
@@ -492,7 +500,7 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       comparaciutats(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       return;
    }
-   cout<<"Poblacio activa "<<ciutat1<<" a l'any "<<any<<endl;
+   cout<<endl<<"Poblacio activa "<<ciutat1<<" a l'any "<<any<<endl;
    cout<<"   Homes: "<<city1.Phomes[any - 2013]<<endl;
    cout<<"   Dones: "<<city1.Pdones[any - 2013]<<endl;
    cout<<"   Total: "<<city1.Ptotal[any - 2013]<<endl;
@@ -512,7 +520,7 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       cout<<"La poblacio activa de dones de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl;
    } else if (city1.Pdones[any - 2013] < city2.Pdones[any - 2013]) {
       double percent = (double(city2.Pdones[any - 2013])/(city1.Pdones[any - 2013]))*100 - 100.00;
-      cout<<"La poblacio activa de dones de "<<city2.nom<<" es un"<<percent<<"% mes gran."<<endl;
+      cout<<"La poblacio activa de dones de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl;
    }
    if(city1.Ptotal[any - 2013] > city2.Ptotal[any - 2013]) {
       double percent = (double(city1.Ptotal[any - 2013]))/(double(city2.Ptotal[any - 2013]))*100 - 100.00;
@@ -526,17 +534,23 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
 
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
    int seleccio;
-   cout<<"Ciutats preferides: "<<endl;
+   cout<<endl<<"Ciutats preferides: "<<endl;
    for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
       cout<<i+1<<". "<<usuariactual.ciutatspreferides[i]<<endl;
    }
    cout<<usuariactual.ciutatspreferides.size()+1<<". Tornar enrere"<<endl;
-   cout<<endl<<"Introdueix el numero de la ciutat que vulguis buscar: ";
+   cout<<"Introdueix el numero de la ciutat que vulguis buscar: ";
    cin>>seleccio;
    if(seleccio == (usuariactual.ciutatspreferides.size() + 1)){
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       return;
    }
+   else if(seleccio>(usuariactual.ciutatspreferides.size() + 1) || seleccio == 0){
+      cout<<endl<<"Numero incorrecte"<<endl;
+      ciutatsguardades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
+   }
+
    ciutat city;
    string nomciutat = usuariactual.ciutatspreferides[seleccio-1];
    int nciutats = ciutats.size();
@@ -549,7 +563,8 @@ void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usu
       }
    }
    if(ciutattrobada == false){
-      cout<<endl<<"Ciutat no trobada a la base de dades."<<endl;
+      cout<<"Ciutat no trobada a la base de dades"<<endl<<endl;
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    } else if(ciutattrobada == true){
       cout<<endl<<"Poblacio activa de "<<nomciutat<<" per anys (2013-2022):"<<endl;
       int any = 2013;
@@ -706,9 +721,18 @@ int seleccio;
    for(int i=0; i<usuariactual.paisospreferits.size(); i++){
       cout<<i+1<<". "<<usuariactual.paisospreferits[i]<<endl;
    }
-   cout<<endl<<"Introdueix el numero del pais que vulguis buscar: ";
+      cout<<usuariactual.paisospreferits.size()+1<<". Tornar enrere"<<endl;
+   cout<<"Introdueix el numero del pais que vulguis buscar: ";
    cin>>seleccio;
-   
+   if(seleccio == (usuariactual.paisospreferits.size() + 1)){
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
+   }
+   else if(seleccio>(usuariactual.paisospreferits.size() + 1) || seleccio == 0){
+      cout<<endl<<"Numero incorrecte"<<endl;
+      paisosguardats (name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      return;
+   }
    pais country;
    string nompais = usuariactual.paisospreferits[seleccio-1];
    int npaisos = paisos.size();
@@ -721,7 +745,8 @@ int seleccio;
       }
    }
    if(paistrobat == false){
-      cout<<endl<<"Pais no trobat a la base de dades."<<endl;
+      cout<<"Pais no trobat a la base de dades"<<endl<<endl;
+      menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    } else if(paistrobat == true){
       cout<<endl<<endl<<"Poblacio activa de "<<nompais<<" per anys (2013-2022):"<<endl;
       int any = 2013;
@@ -820,7 +845,7 @@ string pais1, pais2;
       comparapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       return;
    }
-   cout<<"Poblacio activa i total "<<pais1<<" a l'any "<<any<<endl;
+   cout<<endl<<"Poblacio activa i total "<<pais1<<" a l'any "<<any<<endl;
    cout<<"   Activa: "<<country1.pactiva[any - 2013]<<endl;
    cout<<"   Total: "<<country1.ptotal[any - 2013]<<endl;
    cout<<endl<<"Poblacio activa i total "<<pais2<<" a l'any "<<any<<endl;
@@ -870,6 +895,14 @@ void cercapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>
    }
    if(paistrobat == false){
       cout<<endl<<"Pais no trobat a la base de dades."<<endl;
+      cout<<"Vols tornar a intentar la cerca?  (Si/No): ";
+      cin>>seleccio;
+      if(seleccio == "Si" || seleccio == "SI" || seleccio == "sI" || seleccio == "Si." || seleccio == "SI." || seleccio == "sI." || seleccio == "si" || seleccio == "si."){
+         cercapaisos(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      } else{
+         menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+         return;
+      }
    } else if(paistrobat == true){
       cout<<endl<<"Poblacio activa i total de "<<nompais<<" per anys (2013-2022):"<<endl;
       int any = 2013;
