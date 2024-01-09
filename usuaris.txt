@@ -1,10 +1,9 @@
-9
-raul p455w0rd barcelona bilbao barcelona FIN espana END
-Iker iker14 barcelona berlin FIN zimbabwe region_administrativa_especial_de_macao,_china END
+8
+raul p455w0rd barcelona bilbao barcelona bern paris oviedo sevilla FIN espana italia alemania END
+Iker iker14 barcelona FIN zimbabwe END
 rcanoesbri c0ntr4s3ny4 barcelona FIN espana END
 prova contraprova FIN espana END
 rcanoes rc4n03s FIN END
 raul2 raul2 FIN espana END
 raul3 raul3 FIN END
-raul4 raul4 FIN END
 raul5 raul5 barcelona FIN espana END

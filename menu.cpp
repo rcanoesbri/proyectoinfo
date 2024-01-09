@@ -55,6 +55,9 @@ int main (){
    usuari usuariactual;
    int pos;
 
+   ofstream outfile("resultat.txt");
+   outfile<<" ";
+
    //Cridem accions
    llegirdades(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos); //generara el vector amb totes les dades de les ciutats
    int tamany = ciutats.size();
@@ -347,6 +350,8 @@ int menupaisociutat(){
 }
 
 void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
    string nomciutat, seleccio;
    cout<<endl<<"Cercador de ciutats: "<<endl<<"Introdueix el nom de la ciutat que vulguis buscar. Fes servir _ en lloc d'espais."<<endl<<"Ciutat: ";
    cin>>nomciutat;
@@ -407,11 +412,28 @@ void cercaciutat(string& name, string& nomusuari, int& nusuaris, vector<usuari>&
       } else if (ciutatguardada){
          cout<<"Ja tens guardada aquesta ciutat."<<endl;
       }
+      string eleccio;
+      cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+      cin>>eleccio;
+      if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+         outfile<<endl<<endl;
+         outfile<<endl<<"Poblacio activa de "<<nomciutat<<" per anys (2013-2022):"<<endl;
+         int any = 2013;
+         for(int x = 0; x<10; x++){
+            outfile<<"  "<<any<<": "<<endl;
+            outfile<<"    Poblacio activa homes:"<<city.Phomes[x]<<endl;
+            outfile<<"    Poblacio activa dones:"<<city.Pdones[x]<<endl;
+            outfile<<"    Poblacio activa total:"<<city.Ptotal[x]<<endl;
+            any++;
+         }
+      }
    }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 }
 
 void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
    string ciutat1, ciutat2;
    ciutat city1, city2;
    int any;
@@ -529,10 +551,47 @@ void comparaciutats(string& name, string& nomusuari, int& nusuaris, vector<usuar
       double percent = (double(city2.Ptotal[any - 2013]))/(double(city1.Ptotal[any - 2013]))*100 - 100.00;
       cout<<"La poblacio activa total de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
    }
+   string eleccio;
+   cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+   cin>>eleccio;
+   if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+      outfile<<endl<<endl;
+      outfile<<"Poblacio activa "<<ciutat1<<" a l'any "<<any<<endl;
+      outfile<<"   Homes: "<<city1.Phomes[any - 2013]<<endl;
+      outfile<<"   Dones: "<<city1.Pdones[any - 2013]<<endl;
+      outfile<<"   Total: "<<city1.Ptotal[any - 2013]<<endl;
+      outfile<<endl<<"Poblacio activa "<<ciutat2<<" a l'any "<<any<<endl;
+      outfile<<"   Homes: "<<city2.Phomes[any - 2013]<<endl;
+      outfile<<"   Dones: "<<city2.Pdones[any - 2013]<<endl;
+      outfile<<"   Total: "<<city2.Ptotal[any - 2013]<<endl<<endl;
+      if(city1.Phomes[any - 2013] > city2.Phomes[any - 2013]) {
+         double percent = (double(city1.Phomes[any - 2013]))/(double(city2.Phomes[any - 2013]))*100.00 - 100.00;
+         outfile<<"La poblacio activa d'homes de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      } else if (city1.Phomes[any - 2013] < city2.Phomes[any - 2013]) {
+         double percent = (double(city2.Phomes[any - 2013]))/(double(city1.Phomes[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa d'homes de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      }
+      if(city1.Pdones[any - 2013] > city2.Pdones[any - 2013]) {
+         double percent = (double(city1.Pdones[any - 2013])/(city2.Pdones[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa de dones de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      } else if (city1.Pdones[any - 2013] < city2.Pdones[any - 2013]) {
+         double percent = (double(city2.Pdones[any - 2013])/(city1.Pdones[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa de dones de "<<city2.nom<<" es un"<<percent<<"% mes gran."<<endl;
+      }
+      if(city1.Ptotal[any - 2013] > city2.Ptotal[any - 2013]) {
+         double percent = (double(city1.Ptotal[any - 2013]))/(double(city2.Ptotal[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa total de "<<city1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+      } else if (city1.Ptotal[any - 2013] < city2.Ptotal[any - 2013]) {
+         double percent = (double(city2.Ptotal[any - 2013]))/(double(city1.Ptotal[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa total de "<<city2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
+      }
+   }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 }
 
 void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
    int seleccio;
    cout<<endl<<"Ciutats preferides: "<<endl;
    for(int i=0; i<usuariactual.ciutatspreferides.size(); i++){
@@ -576,6 +635,21 @@ void ciutatsguardades(string& name, string& nomusuari, int& nusuaris, vector<usu
          any++;
       }
    }
+   string eleccio;
+   cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+   cin>>eleccio;
+   if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+      outfile<<endl<<endl;
+      outfile<<endl<<"Poblacio activa de "<<nomciutat<<" per anys (2013-2022):"<<endl;
+      int any = 2013;
+      for(int x = 0; x<10; x++){
+         outfile<<"  "<<any<<": "<<endl;
+         outfile<<"    Poblacio activa homes:"<<city.Phomes[x]<<endl;
+         outfile<<"    Poblacio activa dones:"<<city.Pdones[x]<<endl;
+         outfile<<"    Poblacio activa total:"<<city.Ptotal[x]<<endl;
+         any++;
+      }
+   }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 }
 
@@ -586,7 +660,8 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
    cout<<"1. Nom d'usuari"<<endl;
    cout<<"2. Contrasenya"<<endl;
    cout<<"3. Eliminar paisos/ciutats preferides"<<endl;
-   cout<<"4. Tornar al menu anterior"<<endl;
+   cout<<"4. Eliminar usuari"<<endl;
+   cout<<"5. Tornar al menu anterior"<<endl;
    cout<<"Introdueix el numero: ";
    cin>>seleccio;
    switch (seleccio)
@@ -672,6 +747,9 @@ void editarperfil(string& name, string& nomusuari, int& nusuaris, vector<usuari>
             break;
          }
    case '4':
+      esborrarusuari(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+      break;
+   case '5':
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
       break;
    default:
@@ -716,7 +794,9 @@ void llegirpaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari
 }
 
 void paisosguardats (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
-int seleccio;
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
+   int seleccio;
    cout<<endl<<"Paisos preferits: "<<endl;
    for(int i=0; i<usuariactual.paisospreferits.size(); i++){
       cout<<i+1<<". "<<usuariactual.paisospreferits[i]<<endl;
@@ -756,11 +836,26 @@ int seleccio;
          cout<<"    Poblacio total:"<<country.ptotal[x]<<endl;
       }
    }
+   string eleccio;
+   cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+   cin>>eleccio;
+   if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+      outfile<<endl<<endl;
+      outfile<<endl<<endl<<"Poblacio activa de "<<nompais<<" per anys (2013-2022):"<<endl;
+      int any = 2013;
+      for(int x = 0; x<10; x++){
+         outfile<<"  "<<any<<": "<<endl;
+         outfile<<"    Poblacio activa:"<<country.pactiva[x]<<endl;
+         outfile<<"    Poblacio total:"<<country.ptotal[x]<<endl;
+      }
+   }
    menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 };
 
 void comparapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
-string pais1, pais2;
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
+   string pais1, pais2;
    pais country1, country2;
    int any;
    cout<<endl<<"Comparacio de paisos:"<<endl;
@@ -866,11 +961,39 @@ string pais1, pais2;
       double percent = (double(country2.ptotal[any - 2013]))/(double(country1.ptotal[any - 2013]))*100 - 100.00;
       cout<<"La poblacio total de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
    }
-   menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
+   string eleccio;
+   cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+   cin>>eleccio;
+   if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+      outfile<<endl<<endl;
+      outfile<<"Poblacio activa i total "<<pais1<<" a l'any "<<any<<endl;
+      outfile<<"   Activa: "<<country1.pactiva[any - 2013]<<endl;
+      outfile<<"   Total: "<<country1.ptotal[any - 2013]<<endl;
+      outfile<<endl<<"Poblacio activa i total "<<pais2<<" a l'any "<<any<<endl;
+      outfile<<"   Activa: "<<country2.pactiva[any - 2013]<<endl;
+      outfile<<"   Total: "<<country2.ptotal[any - 2013]<<endl<<endl;
 
+      if(country1.pactiva[any - 2013] > country2.pactiva[any - 2013]) {
+         double percent = (double(country1.pactiva[any - 2013]))/(double(country2.pactiva[any - 2013]))*100.00 - 100.00;
+         outfile<<"La poblacio activa de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      } else if (country1.pactiva[any - 2013] < country2.pactiva[any - 2013]) {
+         double percent = (double(country2.pactiva[any - 2013]))/(double(country1.pactiva[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio activa de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl;
+      }
+      if(country1.ptotal[any - 2013] > country2.ptotal[any - 2013]) {
+         double percent = (double(country1.ptotal[any - 2013]))/(double(country2.ptotal[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio total de "<<country1.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl;
+      } else if (country1.ptotal[any - 2013] < country2.ptotal[any - 2013]) {
+         double percent = (double(country2.ptotal[any - 2013]))/(double(country1.ptotal[any - 2013]))*100 - 100.00;
+         outfile<<"La poblacio total de "<<country2.nom<<" es un "<<percent<<"% mes gran."<<endl<<endl<<endl;
+      }
+   }
+   menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
 };
 
 void cercapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>& usuaris, vector<ciutat>& ciutats, usuari& usuariactual, int& pos, vector<pais>& paisos){
+   ofstream outfile;
+   outfile.open("resultat.txt", std::ios_base::app);
    string nompais, seleccio;
    cout<<endl<<"Cercador de paisos: "<<endl<<"Introdueix el nom del pais que vulguis buscar. Fes servir _ en lloc d'espais."<<endl<<"Pais: ";
    cin>>nompais;
@@ -929,6 +1052,20 @@ void cercapaisos (string& name, string& nomusuari, int& nusuaris, vector<usuari>
          }
       } else if (paisguardat){
          cout<<"Ja tens guardat aquest pais."<<endl;
+      }
+      string eleccio;
+      cout<<"Vols guardar aquesta cerca al document resultat.txt ? (Si/No)";
+      cin>>eleccio;
+      if (eleccio == "Si" || eleccio == "SI" || eleccio == "sI" || eleccio == "Si." || eleccio == "SI." || eleccio == "sI." || eleccio == "si" || eleccio == "si."){
+         outfile<<endl<<endl;
+         outfile<<endl<<"Poblacio activa i total de "<<nompais<<" per anys (2013-2022):"<<endl;
+         int any = 2013;
+         for(int x = 0; x<10; x++){
+            outfile<<"  "<<any<<": "<<endl;
+            outfile<<"    Poblacio activa: "<<country.pactiva[x]<<endl;
+            outfile<<"    Poblacio total: "<<country.ptotal[x]<<endl;
+            any++;
+         }
       }
       menu2(name, nomusuari, nusuaris, usuaris, ciutats, usuariactual, pos, paisos);
    }
